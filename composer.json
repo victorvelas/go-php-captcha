@@ -1,0 +1,19 @@
+{
+    "name": "uset/go-php-captcha",
+    "description": "new captcha from go to php",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Uset\\GoPhpCaptcha\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Victor Velasquez",
+            "email": "victorvelas.lst@gmail.com"
+        }
+    ],
+    "minimum-stability": "beta",
+    "require": {}
+}
