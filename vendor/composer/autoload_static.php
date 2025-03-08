@@ -7,14 +7,27 @@ namespace Composer\Autoload;
 class ComposerStaticInit026c973bd54985c7deca940a52f36a15
 {
     public static $prefixLengthsPsr4 = array (
-        'U' => 
+        'I' => 
         array (
-            'Uset\\GoPhpCaptcha\\' => 18,
+            'Intervention\\Image\\' => 19,
+            'Intervention\\Gif\\' => 17,
+        ),
+        'G' => 
+        array (
+            'GoPhpCaptcha\\' => 13,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Uset\\GoPhpCaptcha\\' => 
+        'Intervention\\Image\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/intervention/image/src',
+        ),
+        'Intervention\\Gif\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/intervention/gif/src',
+        ),
+        'GoPhpCaptcha\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),
