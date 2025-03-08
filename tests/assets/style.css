@@ -1,0 +1,247 @@
+:root {
+    --primary-color: #1a237e;
+    --accent-color: #7c4dff;
+    --text-color: #2c3e50;
+    --background-color: #fafafa;
+    --box-shadow: 0 8px 30px rgba(0,0,0,0.05);
+    --gradient: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    --border-radius: 12px;
+    --transition: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    line-height: 1.7;
+    color: var(--text-color);
+    background-color: var(--background-color);
+}
+
+header {
+    background: var(--gradient);
+    color: white;
+    text-align: center;
+    padding: 6rem 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 20% 150%, rgba(255,255,255,0.1) 0%, transparent 50%);
+}
+
+h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    letter-spacing: -0.5px;
+}
+
+.subtitle {
+    font-size: 1.4rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+    font-weight: 300;
+}
+
+main {
+    max-width: 1200px;
+    margin: 0 auto 0;
+    padding: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+section {
+    margin-bottom: 6rem;
+}
+
+h2 {
+    color: var(--primary-color);
+    margin-bottom: 3rem;
+    text-align: left;
+    font-size: 2.5rem;
+    font-weight: 700;
+    padding-left: 1rem;
+    border-left: 4px solid var(--accent-color);
+}
+
+.demo-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2.5rem;
+}
+
+.demo-box {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.demo-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+}
+
+.demo-box h3 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.demo-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+button {
+    background: var(--gradient);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: 500;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(124, 77, 255, 0.3);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+.resultado {
+    min-height: 60px;
+    padding: 1.5rem;
+    background-color: #f8f9fa;
+    border-radius: var(--border-radius);
+    font-size: 1.1rem;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
+    text-align: center;
+}
+
+.feature {
+    padding: 3rem 2rem;
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+    border: 1px solid rgba(0,0,0,0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+.feature::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--gradient);
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.feature:hover {
+    transform: translateY(-5px);
+}
+
+.feature:hover::before {
+    opacity: 1;
+}
+
+.feature h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.feature p {
+    color: #666;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+.display-flex {
+    display: flex;
+}
+.margin-auto {
+    margin: auto;
+}
+
+footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: var(--gradient);
+    color: white;
+    margin-top: 4rem;
+}
+
+footer p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+    header {
+        padding: 4rem 1rem;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    .subtitle {
+        font-size: 1.2rem;
+    }
+
+    main {
+        margin-top: -2rem;
+        padding: 1.5rem;
+    }
+
+    .demo-container {
+        grid-template-columns: 1fr;
+    }
+
+    .feature {
+        padding: 2rem;
+    }
+
+    h2 {
+        text-align: left;
+        padding-left: 0.75rem;
+        font-size: 2rem;
+    }
+}
