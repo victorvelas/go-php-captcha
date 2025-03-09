@@ -1,2 +1,2 @@
 .caches/
-tmp_sessions/*
+tmp_sessions/sess_*
