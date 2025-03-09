@@ -3,14 +3,8 @@
 
     use Exception;
     use Intervention\Image\Drivers\Gd\Driver;
-    use Intervention\Image\Drivers\Gd\Modifiers\ResizeCanvasModifier;
-    use Intervention\Image\Geometry\Circle;
-    use Intervention\Image\Geometry\Ellipse;
-    use Intervention\Image\Geometry\Factories\CircleFactory;
-    use Intervention\Image\Geometry\Factories\Drawable;
-    use Intervention\Image\Geometry\Factories\EllipseFactory;
     use Intervention\Image\ImageManager as Image;
-
+    use Intervention\Image\Interfaces\ImageInterface;
 
     final class Rotator implements CaptchaDriver
     {
@@ -22,6 +16,8 @@
         private string $cacheFolder = '';
         private int $minAngle;
         private int $maxAngle;
+
+        private int $imageSize = 260;
 
         public function __construct(int $minAngle = 20, int $maxAngle = 340)
         {
@@ -38,6 +34,15 @@
             $this->cacheFolder = $folder;
         }
 
+        private function cropImage(ImageInterface &$image) : void
+        {
+            $width = $image->width();
+            $height = $image->height();
+            $x = max(0, ($width - $this->imageSize) / 2);
+            $y = max(0, ($height - $this->imageSize) / 2);
+            $image->crop($this->imageSize, $this->imageSize, $x, $y);
+        }
+
         public function build() : array
         {
             if ($this->imageFiles === []) {
@@ -52,24 +57,20 @@
             $angle = rand($this->minAngle, $this->maxAngle);
             $gdImg = new Image(new Driver());
             $image = $gdImg->read($imagePath);
+            $this->cropImage($image);
             $image->save($masterPath);
-            
-
             $thumbImg = $gdImg->read($masterPath);
             $thumbImg->rotate($angle);
+            $this->cropImage($thumbImg);
             $thumbImg->save($thumbPath);
-
-            $createCricularShape = $this->cutCircularShape($thumbPath, 50);
-            
+            $createCricularShape = $this->cutCircularShape($thumbPath, 75);
             if ($createCricularShape === false) {
                 throw new Exception("Thumb image circular shape couldn\'t be created", 1);
                 return [
                     'status' => 'error',
                     'errorDetail' => 'Thumb image circular shape couldn\'t be created',
                 ];                
-            }
-
-            
+            }            
             return [
                 'status' => 'success',
                 'angle' => $angle, 
@@ -78,29 +79,21 @@
             ];
         }
 
-
-
         private function cutCircularShape(string $sourcePath, int $circleScale = 10) : bool {
             $outputPath = $sourcePath;
             $image = imagecreatefromstring(file_get_contents($sourcePath));
             $size = min(imagesx($image), imagesy($image));
             $newImage = imagecreatetruecolor($size, $size);
-            // set transparent background
             imagesavealpha($newImage, true);
             $transparent = imagecolorallocatealpha($newImage, 0, 0, 0, 127);
             imagefill($newImage, 0, 0, $transparent);
-
-            // Create circular shape
             $mask = imagecreatetruecolor($size, $size);
             imagesavealpha($mask, true);
             $clear = imagecolorallocatealpha($mask, 0, 0, 0, 127);
             $solid = imagecolorallocatealpha($mask, 0, 0, 0, 0);
             imagefill($mask, 0, 0, $clear);
-
             $circleDiameter = $size * max(0, min(1, $circleScale / 100));
             imagefilledellipse($mask, $size / 2, $size / 2, $circleDiameter, $circleDiameter, $solid);
-
-            // Apply mask on image
             for ($x = 0; $x < $size; $x++) {
                 for ($y = 0; $y < $size; $y++) {
                     if (imagecolorat($mask, $x, $y) === $solid) {
@@ -115,11 +108,14 @@
             return $imageCreated;
         }
 
-        /* Uso de la función
-        $sourcePath = "ruta/a/la/imagen.png"; // Cambia esto por la ruta de tu imagen
-        $outputPath = "ruta/salida/imagen_circular.png";
-        createCircularImage($sourcePath, $outputPath); */
 
+        public static function runValidation(array $data) : bool
+        {
+
+            $min = $_SESSION['rotatorValue'] - $data['marginError'];
+            $max = $_SESSION['rotatorValue'] + $data['marginError'];
+            return ($data['captcha_value'] >= $min) && ($data['captcha_value'] <= $max);
+        }
     }
     
 }

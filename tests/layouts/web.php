@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $data['title'] ?? 'Go PHP captcha' ?></title>
     <link rel="stylesheet" href="assets/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/go-captcha-jslib@1.0.9/dist/gocaptcha.global.min.css" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -34,11 +35,10 @@
             </div>
         </section>
     </main>
-
     <footer>
         <p>Made with love ❤️ and PHP 🐘</p>
     </footer>
-
-    <script src="main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/go-captcha-jslib@1.0.9/dist/gocaptcha.global.min.js"></script>
+    <?= $data['js'] ?? ''; ?>
 </body>
 </html>
